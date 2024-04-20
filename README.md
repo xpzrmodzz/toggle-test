@@ -1,6 +1,6 @@
 -- Variable pour suivre l'état du toggle
 local toggleActif = false
-local teleportationEffectuée = false
+local teleportationEffectuee = false
 
 -- Fonction de téléportation au Dummy2
 local function teleportToDummy()
@@ -32,14 +32,16 @@ end
 
 -- Activer ou désactiver le toggle
 local function toggle()
-    toggleActif = not toggleActif
-    if toggleActif then
-        teleportToDummy()
+    if not toggleActif then
+        toggleActif = true
+        teleportToDummy() -- Téléporter uniquement lorsque le toggle est activé pour la première fois
+    else
+        toggleActif = false
     end
 end
 
 -- Boucle de mise à jour
 while true do
-    wait() -- Attendre 1 seconde entre chaque envoi de données
+    wait(0) -- Attendre 1 seconde entre chaque envoi de données
     sendDataToServer()
 end
