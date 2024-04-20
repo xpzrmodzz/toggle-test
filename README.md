@@ -2,19 +2,6 @@
 local toggleActif = false
 local teleportationEffectuee = false
 
--- Fonction de téléportation au Dummy2
-local function teleportToDummy()
-    -- Vérification si le Dummy2 existe
-    local dummy2 = workspace.MAP:FindFirstChild("5k_dummies").Dummy2
-    if dummy2 then
-        -- Téléportation au Dummy2
-        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(dummy2.HumanoidRootPart.CFrame)
-    else
-        -- Message d'erreur si le Dummy2 n'est pas trouvé
-        print("Le Dummy2 n'existe pas.")
-    end
-end
-
 -- Fonction pour envoyer des données au serveur
 local function sendDataToServer()
     -- Vérification si le toggle est activé
@@ -34,6 +21,20 @@ end
 local function toggle()
     if not toggleActif then
         toggleActif = true
+
+        -- Fonction de téléportation au Dummy2
+        local function teleportToDummy()
+            -- Vérification si le Dummy2 existe
+            local dummy2 = workspace.MAP:FindFirstChild("5k_dummies").Dummy2
+            if dummy2 then
+                -- Téléportation au Dummy2
+                game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(dummy2.HumanoidRootPart.CFrame)
+            else
+                -- Message d'erreur si le Dummy2 n'est pas trouvé
+                print("Le Dummy2 n'existe pas.")
+            end
+        end
+
         teleportToDummy() -- Téléporter uniquement lorsque le toggle est activé pour la première fois
     else
         toggleActif = false
@@ -42,6 +43,6 @@ end
 
 -- Boucle de mise à jour
 while true do
-    wait(0) -- Attendre 1 seconde entre chaque envoi de données
+    wait(1) -- Attendre 1 seconde entre chaque envoi de données
     sendDataToServer()
 end
