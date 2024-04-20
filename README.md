@@ -1,5 +1,6 @@
 -- Variable pour suivre l'état du toggle
 local toggleActif = false
+local teleportationEffectuée = false
 
 -- Fonction de téléportation au Dummy2
 local function teleportToDummy()
@@ -18,12 +19,6 @@ end
 local function sendDataToServer()
     -- Vérification si le toggle est activé
     if toggleActif then
-        -- Téléportation au Dummy2 si elle n'a pas encore été effectuée
-        if not teleportationEffectuée then
-            teleportToDummy()
-            teleportationEffectuée = true
-        end
-
         -- Données à envoyer au serveur
         local args = {
             [1] = workspace.MAP:FindFirstChild("5k_dummies").Dummy2.Humanoid,
@@ -38,10 +33,13 @@ end
 -- Activer ou désactiver le toggle
 local function toggle()
     toggleActif = not toggleActif
+    if toggleActif then
+        teleportToDummy()
+    end
 end
 
 -- Boucle de mise à jour
 while true do
-    wait()
+    wait() -- Attendre 1 seconde entre chaque envoi de données
     sendDataToServer()
 end
